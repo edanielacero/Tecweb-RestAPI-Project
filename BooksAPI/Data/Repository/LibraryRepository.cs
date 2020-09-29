@@ -14,19 +14,32 @@ namespace BooksAPI.Data.Repository
             new AuthorEntity(){Id=2, Name="Tony Robbins", BirthDate=new DateTime(1960,2,29), Country="US"},
             new AuthorEntity(){Id=3, Name="Lucas Leys", BirthDate=new DateTime(1972,2,10), Country="Argentina"}
         };
-        public AuthorEntity CreateAuthor(AuthorEntity authorsModel)
+        public AuthorEntity CreateAuthor(AuthorEntity author)
         {
-            throw new NotImplementedException();
+            int newId;
+            if (authors.Count == 0)
+            {
+                newId = 1;
+            }
+            else
+            {
+                newId = authors.OrderByDescending(a => a.Id).FirstOrDefault().Id + 1;
+            }
+            author.Id = newId;
+            authors.Add(author);
+            return author;
         }
 
         public bool DeleteAuthor(int authorId)
         {
-            throw new NotImplementedException();
+            var authorToDelete = authors.FirstOrDefault(a => a.Id == authorId);
+            authors.Remove(authorToDelete);
+            return true;
         }
 
         public AuthorEntity GetAuthor(int authorId)
         {
-            throw new NotImplementedException();
+            return authors.FirstOrDefault(a => a.Id == authorId);
         }
 
         public IEnumerable<AuthorEntity> GetAuthors(string orderBy)
@@ -48,7 +61,11 @@ namespace BooksAPI.Data.Repository
 
         public bool UpdateAuthor(AuthorEntity authorsModel)
         {
-            throw new NotImplementedException();
+            var authorToUpdate = GetAuthor(authorsModel.Id);
+            authorToUpdate.Name = authorsModel.Name ?? authorToUpdate.Name;
+            authorToUpdate.Country = authorsModel.Country ?? authorToUpdate.Country;
+            authorToUpdate.BirthDate = authorsModel.BirthDate ?? authorToUpdate.BirthDate;
+            return true;
         }
     }
 }

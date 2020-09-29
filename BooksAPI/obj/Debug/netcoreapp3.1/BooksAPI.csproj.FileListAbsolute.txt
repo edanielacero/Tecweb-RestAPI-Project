@@ -16,3 +16,8 @@ C:\Users\edani\Documents\UCB\Tecnologias Web\BooksAPI\BooksAPI\obj\Debug\netcore
 C:\Users\edani\Documents\UCB\Tecnologias Web\BooksAPI\BooksAPI\obj\Debug\netcoreapp3.1\BooksAPI.dll
 C:\Users\edani\Documents\UCB\Tecnologias Web\BooksAPI\BooksAPI\obj\Debug\netcoreapp3.1\BooksAPI.pdb
 C:\Users\edani\Documents\UCB\Tecnologias Web\BooksAPI\BooksAPI\obj\Debug\netcoreapp3.1\BooksAPI.genruntimeconfig.cache
+C:\Users\edani\Documents\UCB\Tecnologias Web\BooksAPI\BooksAPI\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\edani\Documents\UCB\Tecnologias Web\BooksAPI\BooksAPI\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\edani\Documents\UCB\Tecnologias Web\BooksAPI\BooksAPI\obj\Debug\netcoreapp3.1\BooksAPI.csproj.CoreCompileInputs.cache
+C:\Users\edani\Documents\UCB\Tecnologias Web\BooksAPI\BooksAPI\obj\Debug\netcoreapp3.1\BooksAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\edani\Documents\UCB\Tecnologias Web\BooksAPI\BooksAPI\obj\Debug\netcoreapp3.1\BooksAPI.csproj.CopyComplete

@@ -1,4 +1,6 @@
-﻿using BooksAPI.Data.Repository;
+﻿using AutoMapper;
+using BooksAPI.Data.Entities;
+using BooksAPI.Data.Repository;
 using BooksAPI.Exceptions;
 using BooksAPI.Models;
 using System;
@@ -11,10 +13,12 @@ namespace BooksAPI.Services
     public class AuthorsServices : IAuthorsServices
     {
         ILibraryRepository _libraryRepository;
-        
-        public AuthorsServices(ILibraryRepository libraryRepository)
+        private IMapper _mapper;
+
+        public AuthorsServices(ILibraryRepository libraryRepository, IMapper mapper)
         {
             _libraryRepository = libraryRepository;
+            _mapper = mapper;
         }
 
         private HashSet<string> allowedOrderByParameters = new HashSet<string>()
@@ -30,57 +34,55 @@ namespace BooksAPI.Services
             {
                 throw new BadRequestOperationException($"the field {orderBy} is not supported, please use one of these {string.Join(",",allowedOrderByParameters)}");
             }
-            return _libraryRepository.GetAuthors(orderBy);
+            var entityList= _libraryRepository.GetAuthors(orderBy);
+            var modelList = _mapper.Map<IEnumerable<AuthorsModel>>(entityList);
+            return modelList;
         }
 
         public AuthorsModel GetAuthor(int authorId)
         {
-            var author= authors.FirstOrDefault(a => a.Id == authorId);
+            var author = _libraryRepository.GetAuthor(authorId);
             if (author == null)
             {
                 throw new NotFoundOperationException($"The author with id{authorId} doesnt exist");
             }
-            return author;
+            return _mapper.Map<AuthorsModel>(author);
         }
 
         public AuthorsModel CreateAuthor(AuthorsModel authorsModel)
         {
-            int newId;
-            if (authors.Count == 0)
-            {
-                newId = 1;
-            }
-            else
-            {
-            newId = authors.OrderByDescending(a => a.Id).FirstOrDefault().Id + 1;
-            }
-            authorsModel.Id = newId;
-            authors.Add(authorsModel);
-            return authorsModel;
+            var authorEntity = _mapper.Map<AuthorEntity>(authorsModel);
+            var authorToReturn = _libraryRepository.CreateAuthor(authorEntity);
+            return _mapper.Map<AuthorsModel>(authorToReturn);
         }
 
         public DeleteModel DeleteAuthor(int authorId)
         {
-            var authorToDelete = authors.FirstOrDefault(a => a.Id == authorId);
-            if (authorToDelete==null)
+            var authorToDelete = GetAuthor(authorId);
+            var result =_libraryRepository.DeleteAuthor(authorId);
+            if (result)
             {
-                throw new NotFoundOperationException($"The author with id{authorId} doesnt exist");
+                return new DeleteModel()
+                {
+                    IsSuccess = result,
+                    Message = "The author was deleted"
+                };
             }
-            var result = authors.Remove(authorToDelete);
-            return new DeleteModel()
+            else
             {
-                IsSuccess = true,
-                Message = "The author was deleted"
-            };
+                return new DeleteModel()
+                {
+                    IsSuccess = result,
+                    Message = "The author was not deleted"
+                };
+            }
         }
 
         public AuthorsModel UpdateAuthor(int authorId, AuthorsModel authorsModel)
         {
-            var authorToUpdate = GetAuthor(authorId);
-            authorToUpdate.Name = authorsModel.Name ?? authorToUpdate.Name;
-            authorToUpdate.Country = authorsModel.Country ?? authorToUpdate.Country;
-            authorToUpdate.BirthDate = authorsModel.BirthDate ?? authorToUpdate.BirthDate;
-            return authorToUpdate;
+            var authorEntity = _mapper.Map<AuthorEntity>(authorsModel);
+            var authorToReturn = _libraryRepository.UpdateAuthor(authorEntity);
+            return _mapper.Map<AuthorsModel>(authorToReturn);
         }
     }
 }
