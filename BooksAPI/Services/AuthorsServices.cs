@@ -81,8 +81,8 @@ namespace BooksAPI.Services
         public AuthorsModel UpdateAuthor(int authorId, AuthorsModel authorsModel)
         {
             var authorEntity = _mapper.Map<AuthorEntity>(authorsModel);
-            var authorToReturn = _libraryRepository.UpdateAuthor(authorEntity);
-            return _mapper.Map<AuthorsModel>(authorToReturn);
+            _libraryRepository.UpdateAuthor(authorEntity);
+            return authorsModel;
         }
     }
 }

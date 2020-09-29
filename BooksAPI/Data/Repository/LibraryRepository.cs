@@ -59,12 +59,12 @@ namespace BooksAPI.Data.Repository
             }
         }
 
-        public bool UpdateAuthor(AuthorEntity authorsModel)
+        public bool UpdateAuthor(AuthorEntity author)
         {
-            var authorToUpdate = GetAuthor(authorsModel.Id);
-            authorToUpdate.Name = authorsModel.Name ?? authorToUpdate.Name;
-            authorToUpdate.Country = authorsModel.Country ?? authorToUpdate.Country;
-            authorToUpdate.BirthDate = authorsModel.BirthDate ?? authorToUpdate.BirthDate;
+            var authorToUpdate = new AuthorEntity();
+            authorToUpdate.Name = author.Name ?? authorToUpdate.Name;
+            authorToUpdate.Country = author.Country ?? authorToUpdate.Country;
+            authorToUpdate.BirthDate = author.BirthDate ?? authorToUpdate.BirthDate;
             return true;
         }
     }

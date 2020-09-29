@@ -89,7 +89,7 @@ namespace BooksAPI.Controllers
         }
 
         [HttpPut("{authorId:int}")]
-        public IActionResult UpdateAuthor(int authorId, [FromBody]AuthorsModel authorsModel)
+        public IActionResult UpdateAuthor(int authorId, [FromBody] AuthorsModel authorsModel)
         {
             try
             {
@@ -108,10 +108,6 @@ namespace BooksAPI.Controllers
             catch (NotFoundOperationException ex)
             {
                 return NotFound(ex.Message);
-            }
-            catch (BadRequestOperationException ex)
-            {
-                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
