@@ -61,14 +61,22 @@ namespace BooksAPI.Data.Repository
             }
         }
 
-        public bool UpdateBook(BookEntity book)
+        public BookEntity UpdateBook(int bookId, BookEntity book)
         {
-            var bookToUpdate = new BookEntity();
+            var bookToUpdate = GetBook(bookId);
             bookToUpdate.Title = book.Title ?? bookToUpdate.Title;
             bookToUpdate.Author = book.Author ?? bookToUpdate.Author;
-            bookToUpdate.rating = book.rating ?? bookToUpdate.rating;
-            bookToUpdate.availability = book.availability ?? bookToUpdate.availability;
-            return true;
+            if (book.rating != 0)
+            {
+                bookToUpdate.rating = book.rating;
+            }
+            //bookToUpdate.rating = book.rating ?? bookToUpdate.rating;
+            //bookToUpdate.availability = book.availability ?? bookToUpdate.availability;
+            if (book.availability != 0)
+            {
+                bookToUpdate.availability = book.availability;
+            }
+            return bookToUpdate;
         }
     }
 }

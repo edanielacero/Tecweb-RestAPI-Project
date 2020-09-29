@@ -13,6 +13,6 @@ namespace BooksAPI.Data.Repository
         BookEntity GetBook(int bookId);
         BookEntity CreateBook(BookEntity booksModel);
         bool DeleteBook(int bookId);
-        bool UpdateBook(BookEntity booksModel);
+        BookEntity UpdateBook(int bookId, BookEntity booksModel);
     }
 }

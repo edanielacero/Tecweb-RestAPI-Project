@@ -82,8 +82,8 @@ namespace BooksAPI.Services
         public BookModel UpdateBook(int bookId, BookModel booksModel)
         {
             var bookEntity = _mapper.Map<BookEntity>(booksModel);
-            _libraryRepository.UpdateBook(bookEntity);
-            return booksModel;
+            var bookUpdated = _libraryRepository.UpdateBook(bookId, bookEntity);
+            return _mapper.Map<BookModel>(bookUpdated);
         }
     }
 }
