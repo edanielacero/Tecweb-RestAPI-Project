@@ -8,11 +8,11 @@ namespace BooksAPI.Data.Repository
 {
     public interface ILibraryRepository
     {
-        //Authors
-        IEnumerable<AuthorEntity> GetAuthors(string orderBy);
-        AuthorEntity GetAuthor(int authorId);
-        AuthorEntity CreateAuthor(AuthorEntity authorsModel);
-        bool DeleteAuthor(int authorId);
-        bool UpdateAuthor(AuthorEntity authorsModel);
+        //Books
+        IEnumerable<BookEntity> GetBooks(string orderBy);
+        BookEntity GetBook(int bookId);
+        BookEntity CreateBook(BookEntity booksModel);
+        bool DeleteBook(int bookId);
+        bool UpdateBook(BookEntity booksModel);
     }
 }

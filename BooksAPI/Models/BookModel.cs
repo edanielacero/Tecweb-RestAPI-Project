@@ -6,14 +6,19 @@ using System.Threading.Tasks;
 
 namespace BooksAPI.Models
 {
-    public class AuthorsModel
+    public enum Availability
+    {
+        rented,
+        available
+    }
+    public class BookModel
     {
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string Title { get; set; }
         [StringLength(30, MinimumLength =2)]
-        public string Country { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime? BirthDate { get; set; }
+        public string Author { get; set; }
+        public int rating { get; set; }
+        public Availability availability { get; set; }
     }
 }

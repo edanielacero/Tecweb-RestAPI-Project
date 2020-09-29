@@ -11,19 +11,19 @@ using System.Threading.Tasks;
 namespace BooksAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class AuthorsController:Controller
+    public class BooksController:Controller
     {
-        private IAuthorsServices _authorsServices;
-        public AuthorsController(IAuthorsServices authorsServices)
+        private IBooksServices _booksServices;
+        public BooksController(IBooksServices booksServices)
         {
-            this._authorsServices = authorsServices;
+            this._booksServices = booksServices;
         }
         [HttpGet]
-        public ActionResult<IEnumerable<AuthorsModel>> GetAuthors(string orderBy = "Id")
+        public ActionResult<IEnumerable<BookModel>> GetBooks(string orderBy = "Id")
         {
             try
             {
-                return Ok(_authorsServices.GetAuthors(orderBy));
+                return Ok(_booksServices.GetBooks(orderBy));
             }
             catch (BadRequestOperationException ex)
             {
@@ -34,12 +34,12 @@ namespace BooksAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
             }
         }
-        [HttpGet("{authorId:int}", Name ="GetAuthor")]
-        public ActionResult<AuthorsModel> GetAuthor(int AuthorId)
+        [HttpGet("{bookId:int}", Name ="GetBook")]
+        public ActionResult<BookModel> GetBook(int BookId)
         {
             try
             {
-                return _authorsServices.GetAuthor(AuthorId);
+                return _booksServices.GetBook(BookId);
             }
             catch (NotFoundOperationException ex)
             {
@@ -52,7 +52,7 @@ namespace BooksAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<AuthorsModel> CreateAuthor([FromBody] AuthorsModel authorModel)
+        public ActionResult<BookModel> CreateBook([FromBody] BookModel bookModel)
         {
             try
             {
@@ -61,8 +61,8 @@ namespace BooksAPI.Controllers
                     return BadRequest(ModelState);
                 }
                 var url = HttpContext.Request.Host;
-                var newAuthor = _authorsServices.CreateAuthor(authorModel);
-                return CreatedAtRoute("GetAuthor", new { authorId = authorModel.Id }, newAuthor);
+                var newBook = _booksServices.CreateBook(bookModel);
+                return CreatedAtRoute("GetBook", new { bookId = bookModel.Id }, newBook);
             }
             catch (Exception ex)
             {
@@ -70,12 +70,12 @@ namespace BooksAPI.Controllers
             }
         }
 
-        [HttpDelete("{authorId:int}")]
-        public ActionResult<DeleteModel> DeleteAuthor(int authorId)
+        [HttpDelete("{bookId:int}")]
+        public ActionResult<DeleteModel> DeleteBook(int bookId)
         {
             try
             {
-                return Ok(_authorsServices.DeleteAuthor(authorId));
+                return Ok(_booksServices.DeleteBook(bookId));
 
             }
             catch (NotFoundOperationException ex)
@@ -88,8 +88,8 @@ namespace BooksAPI.Controllers
             }
         }
 
-        [HttpPut("{authorId:int}")]
-        public IActionResult UpdateAuthor(int authorId, [FromBody] AuthorsModel authorsModel)
+        [HttpPut("{bookId:int}")]
+        public IActionResult UpdateBook(int bookId, [FromBody] BookModel booksModel)
         {
             try
             {
@@ -97,13 +97,13 @@ namespace BooksAPI.Controllers
                 {
                     foreach (var pair in ModelState)
                     {
-                        if (pair.Key == nameof(authorsModel.Country) && pair.Value.Errors.Count > 0)
+                        if (pair.Key == nameof(booksModel.Author) && pair.Value.Errors.Count > 0)
                         {
                             return BadRequest(pair.Value.Errors);
                         }
                     }
                 }
-                return Ok(_authorsServices.UpdateAuthor(authorId, authorsModel));
+                return Ok(_booksServices.UpdateBook(bookId, booksModel));
             }
             catch (NotFoundOperationException ex)
             {

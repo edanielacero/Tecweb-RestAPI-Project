@@ -12,7 +12,7 @@ namespace BooksAPI.Data
     {
         public AutomapperProfile()
         {
-            this.CreateMap<AuthorEntity, AuthorsModel>().ReverseMap();
+            this.CreateMap<BookEntity, BookModel>().ReverseMap();
         }
     }
 }

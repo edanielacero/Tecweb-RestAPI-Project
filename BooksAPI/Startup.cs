@@ -28,7 +28,7 @@ namespace BooksAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddTransient<IAuthorsServices, AuthorsServices>();
+            services.AddTransient<IBooksServices, BooksServices>();
             services.AddSingleton<ILibraryRepository, LibraryRepository>();
             //automappper
             services.AddAutoMapper(typeof(Startup));
