@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\edani\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\edani\\.nuget\\packages"
+    ]
+  }
+}
