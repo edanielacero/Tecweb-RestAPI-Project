@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace BooksAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class BooksController:Controller
+    public class BooksController : Controller
     {
         private IBooksServices _booksServices;
         public BooksController(IBooksServices booksServices)
@@ -34,12 +34,12 @@ namespace BooksAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
             }
         }
-        [HttpGet("{bookId:int}", Name ="GetBook")]
+        [HttpGet("{bookId:int}", Name = "GetBook")]
         public ActionResult<BookModel> GetBook(int BookId)
         {
             try
             {
-                return _booksServices.GetBook(BookId);
+                return Ok(_booksServices.GetBook(BookId));
             }
             catch (NotFoundOperationException ex)
             {
@@ -108,6 +108,39 @@ namespace BooksAPI.Controllers
             catch (NotFoundOperationException ex)
             {
                 return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
+            }
+        }
+
+        [HttpGet("rating/{rate:int}")]
+        public ActionResult<IEnumerable<BookModel>> GetTopBooks(int rate)
+        {
+            try
+            {
+                return Ok(_booksServices.GetTopRatedBooks(rate));
+            }
+            catch (BadRequestOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
+            }
+        }
+        [HttpGet("fromAuthor/{author}", Name = "GetBooksFromAuthor")]
+        public ActionResult<IEnumerable<BookModel>> GetBooksFromAuthor(string author)
+        {
+            try
+            {
+                return Ok(_booksServices.GetBooksFromAuthor(author));
+            }
+            catch (BadRequestOperationException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {

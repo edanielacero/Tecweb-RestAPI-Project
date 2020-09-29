@@ -13,6 +13,7 @@ namespace BooksAPI.Services
         BookModel CreateBook(BookModel bookModel);
         DeleteModel DeleteBook(int bookId);
         BookModel UpdateBook(int bookId, BookModel bookModel);
-        
+        IEnumerable<BookModel> GetTopRatedBooks(int rate);
+        IEnumerable<BookModel> GetBooksFromAuthor(string author);
     }
 }

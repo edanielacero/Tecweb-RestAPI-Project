@@ -85,5 +85,18 @@ namespace BooksAPI.Services
             var bookUpdated = _libraryRepository.UpdateBook(bookId, bookEntity);
             return _mapper.Map<BookModel>(bookUpdated);
         }
+        public IEnumerable<BookModel> GetTopRatedBooks(int rate)
+        {
+            var entityList = _libraryRepository.GetTopBooks(rate);
+            var modelList = _mapper.Map<IEnumerable<BookModel>>(entityList);
+            return modelList;
+        }
+        public IEnumerable<BookModel> GetBooksFromAuthor(string author)
+        {
+            var entityList = _libraryRepository.GetBooksFromAuthor(author);
+            var modelList = _mapper.Map<IEnumerable<BookModel>>(entityList);
+            return modelList;
+        }
+
     }
 }

@@ -11,8 +11,10 @@ namespace BooksAPI.Data.Repository
         private List<BookEntity> books = new List<BookEntity>
         {
             new BookEntity(){Id=1, Title="Cien años de soledad", Author="Gabriel Garcia Marquez", rating=8, availability=Availability.available},
-            new BookEntity(){Id=2, Title="Controle su destino", Author="Tony RObbins", rating=7, availability=Availability.available},
-            new BookEntity(){Id=3, Title="El mejor lider de la historia", Author="Lucas Leys", rating=8, availability=Availability.available},
+            new BookEntity(){Id=2, Title="Controle su destino", Author="Tony Robbins", rating=7, availability=Availability.available},
+            new BookEntity(){Id=3, Title="El mejor lider de la historia", Author="Lucas Leys", rating=6, availability=Availability.available},
+            new BookEntity(){Id=4, Title="Poder Sin Limites", Author="Tony Robbins", rating=9, availability=Availability.available},
+            new BookEntity(){Id=5, Title="El amor en los tiempos de colera", Author="Gabriel Garcia Marquez", rating=8, availability=Availability.available},
         };
         public BookEntity CreateBook(BookEntity book)
         {
@@ -77,6 +79,28 @@ namespace BooksAPI.Data.Repository
                 bookToUpdate.availability = book.availability;
             }
             return bookToUpdate;
+        }
+        public IEnumerable<BookEntity> GetTopBooks(int rate)
+        {
+            var top5books = new List<BookEntity>();
+            var newlist=books.OrderByDescending(c => c.rating).ToList();
+            for (int i = 0; i < rate; i++)
+            {
+                top5books.Add(newlist[i]);
+            }
+            return top5books;
+        }
+        public IEnumerable<BookEntity> GetBooksFromAuthor(string author)
+        {
+            var booksFromAuthor = from book in books where book.Author == author select book;
+            return booksFromAuthor;
+            /*var booksFromAuthor = new List<BookEntity>();
+            var newlist = books.OrderByDescending(c => c.rating).ToList();
+            for (int i = 0; i < rate; i++)
+            {
+                top5books.Add(newlist[i]);
+            }
+            return booksFromAuthor;*/
         }
     }
 }

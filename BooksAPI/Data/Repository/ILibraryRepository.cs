@@ -14,5 +14,8 @@ namespace BooksAPI.Data.Repository
         BookEntity CreateBook(BookEntity booksModel);
         bool DeleteBook(int bookId);
         BookEntity UpdateBook(int bookId, BookEntity booksModel);
+        IEnumerable<BookEntity> GetTopBooks(int rate);
+        IEnumerable<BookEntity> GetBooksFromAuthor(string author);
+        
     }
 }
